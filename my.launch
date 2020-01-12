@@ -1,0 +1,14 @@
+ <launch>
+ 
+<!--     
+    <node name="point_m" pkg="point_m" type="point_m_node" output="screen"/>
+    <node name="point_n" pkg="point_n" type="point_n_node" output="screen"/>
+    <node name="rotator" pkg="rotator" type="rotator_node" output="screen"/>
+    <node name="map_transform" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.0 0.0 0.0 0.0 map A 100" /> 
+    -->
+    
+    <!-- <node name="rviz" pkg="rviz" type="rviz"/> -->
+
+    <node name="dashboard" pkg="dashboard" type="abc_node" output="screen"/>
+    <node name="test_db" pkg="test" type="test_node" output="screen"/>
+</launch>

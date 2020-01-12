@@ -1,0 +1,39 @@
+#include "ros/ros.h"
+#include "dashboard/Request.h"
+#include "std_msgs/Bool.h"
+
+void cb(const std_msgs::Bool& data){
+    ROS_WARN("got ret: %s",data.data?"true":"false");
+}
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "test");
+    ros::NodeHandle node;
+
+    auto Sub = node.subscribe("dashboard_reply/bool_test",100,cb);
+
+    auto publisher = node.advertise<dashboard::Request>("dashboard/bool",100);
+
+    dashboard::Request req;
+    req.action="init";
+    req.editable = true;
+    req.name="bool_test";
+    req.type="bool";
+    req.data="false";
+
+    ros::Rate loop_rate(5);
+
+    while(ros::ok())
+	{
+        loop_rate.sleep();
+        static bool b=false;
+        req.data = b ? "true" : "false";
+        b=!b;
+        publisher.publish(req);
+        ros::spinOnce();
+        
+	}
+
+    return 0;
+}

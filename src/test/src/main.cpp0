@@ -1,0 +1,41 @@
+#include "ros/ros.h"
+#include "dashboard/Request.h"
+#include "std_msgs/String.h"
+
+void cb(const std_msgs::String str){
+    ROS_WARN("got ret: %s",str.data.c_str());
+}
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "test");
+    ros::NodeHandle node;
+
+    auto Pub = node.subscribe("dashboard_reply/str_test",10,cb);
+
+    const std::string ori = "helllllo!";
+    auto publisher = node.advertise<dashboard::Request>("dashboard/str",100);
+
+    dashboard::Request req;
+    req.action="set";
+    req.editable = true;
+    req.name="str_test";
+    req.type="string";
+    req.data=ori;
+
+    ros::Rate loop_rate(5);
+
+    while(ros::ok())
+	{
+		loop_rate.sleep();	//按前面设置的10Hz频率将程序挂起
+        static int a=0;
+        req.data += ('0'+ a++);
+        if(a>=10) a=0 ;
+        if(req.data.length()>=40)req.data=ori;
+        
+		publisher.publish(req);
+        ros::spinOnce();
+	}
+
+    return 0;
+}
