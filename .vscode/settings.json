@@ -68,7 +68,8 @@
         "qapplication": "cpp",
         "*.ipp": "cpp",
         "*.cpp0": "cpp",
-        "*.cpp2": "cpp"
+        "*.cpp2": "cpp",
+        "pid.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "cmake.configureOnOpen": false
