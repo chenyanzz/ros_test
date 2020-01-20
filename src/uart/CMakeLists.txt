@@ -10,7 +10,12 @@ project(uart)
 find_package(catkin REQUIRED COMPONENTS
   serial
   roscpp
+  message_generation
 )
+
+add_message_files(FILES Datapack.msg)
+generate_messages(DEPENDENCIES std_msgs) 
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -95,7 +100,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES uart
-#  CATKIN_DEPENDS serial
+  CATKIN_DEPENDS message_runtime
 #  DEPENDS system_lib
 )
 

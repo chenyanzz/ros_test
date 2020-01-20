@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   dashboard
+  uart
 )
 
 ## System dependencies are found with CMake's conventions
@@ -107,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES point_m
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+ CATKIN_DEPENDS roscpp std_msgs uart
 #  DEPENDS system_lib
 )
 

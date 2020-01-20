@@ -19,7 +19,7 @@ static dp_callback_t data_callback = (dp_callback_t)0;
 
 serial::Serial *ser;
 
-void dp_send(CMD_ID cmd_id, String param)
+void dp_send(int32_t cmd_id, String param)
 {
 	static char str_back[100]; //用来crc的部分
 	static char str[100];
@@ -29,6 +29,7 @@ void dp_send(CMD_ID cmd_id, String param)
 	for (int i = 0; i < 3; i++)
 	{
 		ser->write(std::string(str));
+		ROS_INFO("sent datapck: \"%s\"",str);
 		ser->flush();
 		ros::Rate(1000).sleep();
 	}
@@ -37,14 +38,14 @@ void dp_send(CMD_ID cmd_id, String param)
 void dp_onRecv(String str)
 {
 	uint8_t crc;
-	CMD_ID cmd_id;
+	int32_t cmd_id;
 	char param[100]; //注意多个参数不能以空格分隔
 	{
 		int _crc, _cmd_id;
 		if (sscanf(str, DATA_BEGIN " %d " DATA_SEPERATOR " %d %s " DATA_END, &_crc, &_cmd_id, param) != datapack_cntParts)
 			return; //参数数量不匹配
 		crc = _crc;
-		cmd_id = (CMD_ID)_cmd_id;
+		cmd_id = _cmd_id;
 	}
 	//check crc8
 	const char *crc_begin = strstr(str, DATA_SEPERATOR);
