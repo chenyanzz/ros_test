@@ -6,14 +6,14 @@
 static ros::Publisher publisher;
 static ros::Subscriber subscriber;
 
-static uint16_t speeds[8];//rpm
+static int16_t speeds[8];//rpm
 static int16_t powers[8];
 
 static void canframe_callback(const can_msgs::Frame &frame)
 {
     if(frame.id>=0x201 && frame.id <=0x208){
         int motor_id = frame.id - 0x201;
-        speeds[motor_id] = (uint16_t)(frame.data[2]<<8 | frame.data[3]);
+        speeds[motor_id] = (int16_t)(frame.data[2]<<8 | frame.data[3]);
     }
 }
 
@@ -60,8 +60,7 @@ int16_t motor_getPower(motor_id_t id){
     return powers[id];
 }
 
-//ABS of SPEED !!
-uint16_t motor_getSpeed(motor_id_t id){
+int16_t motor_getSpeed(motor_id_t id){
     id--;
     assert (id<=8);
     return speeds[id];

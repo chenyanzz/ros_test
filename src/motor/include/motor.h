@@ -15,5 +15,5 @@ void motor_setPower(motor_id_t id, int16_t power);
 int16_t motor_getPower(motor_id_t id);
 
 //id: 1 ~ 8
-//return: abs(RPM)
-uint16_t motor_getSpeed(motor_id_t id);
+//return: RPM
+int16_t motor_getSpeed(motor_id_t id);
